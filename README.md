@@ -79,3 +79,37 @@ For keyboard control:
    - Are their serial clocks similar enough to share?
      - Seems like they are
    - I know very little about Direct Port Manipulation and am unsure whether or not I can have multiple outputs
+
+
+
+##### About the Bit Shifting
+
+The commands sent to the Deck from the Joystick are made up of two bytes. These bytes line up perfectly with the serial clock. 10010000 00000000 would pulse the data line on the first and fourth clock pulse. 
+
+A more efficient sketch for the Arduino would take the two bytes from the Python and shift the bits over on each clock pulse. The bit shifted out would tell the Arduino whether or not to pulse the clock.
+
+Example:
+
+The Arduino receives 00100000 01000001
+
+The Arduino combines the bytes into 0010000001000001. Each clock pulse the Arduino will shift the bits to the left and check the bit shifted out.
+
+1st Clock
+
+0010000001000001 becomes 0100000010000010
+
+If statement runs to check if the bit shifted out is a 1 or 0. If 1 the Data line pulses
+
+2nd Clock
+
+010000001000001 becomes 1000000100000100
+
+If statement runs to check if the bit shifted out is a 1 or 0. The bit shifted out is a 0. The data line stays low
+
+3rd Clock
+
+1000000100000100 becomes 0000001000001000
+
+If statement runs to check if the bit shifted out is a 1 or 0. The bit shifted out is a 1 and the data line drives high until the next clock pulse
+
+.....
