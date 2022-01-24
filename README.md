@@ -82,7 +82,7 @@ For keyboard control:
 
 
 
-##### About the Bit Shifting
+## About the Bit Shifting
 
 The commands sent to the Deck from the Joystick are made up of two bytes. These bytes line up perfectly with the serial clock. 10010000 00000000 would pulse the data line on the first and fourth clock pulse. 
 
