@@ -53,7 +53,7 @@ For keyboard control:
    - refactor main loop. currently copy pasted for each controller instead of in a function
 2. Make Arduino code shift bits. Actually emulate the bytes sent on the original controller
    - Currently just telling it to spike on the right clock if a button is presesed. 
-   - This is much less efficient then just reading each bit in a byte. I'll explain [Below](https://github.com/talmageluke/rokenbok-controller-port#about-the-bit-shifting).
+   - This is much less efficient then just reading each bit in a byte. I'll explain [Below](rokenbok-controller-port#about-the-bit-shifting).
 
 #### Functionality: 
 
