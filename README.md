@@ -25,6 +25,8 @@ Data - Digital 4
 
 Ground the VCC line from the Command Deck 
 
+You can find details on the pins of the DB9 connector [here.](Documentation/DB9Pinout.txt)
+
 ### Software
 Required Library:
 
