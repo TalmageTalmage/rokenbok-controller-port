@@ -1,13 +1,39 @@
 # rokenbok-controller-port
 This is a repo for using an Arduino to control a Rokenbok. This repo includes a way to controll by keyboard as well as multiple controllers. 
 
-# Installation
-Required
+# Installation/Setup
+### Hardware
+
+The Arduino will use the following ports:
+
+Serial Clock - Digital 2
+
+Latch - Digital 3
+
+Data - Digital 4
+
+Ground the VCC line from the Command Deck 
+
+### Software
+Required Library:
+
 ```pip install pyserial```
-For controllers
+
+For controllers support:
+
 ```pip install pygame```
-For keyboard control
-```pip install pywin32``
+
+For keyboard control:
+
+```pip install pywin32```
+
+1. After getting the libraries, upload the 'Hackenbock.ino' sketch to the Arduino(s). Adjust the sketch as needed depending on the model. 
+
+2. Adjust the Python code to match the COM port of the Arduino(s)
+
+3. Run Controller.py or Keyboard.py
+
+4. Play Rokenbok!
 
 ### TO DO:
 
@@ -32,6 +58,7 @@ For keyboard control
    - Have to comment out/add code to change number of controllers.
    - Have to reset if controller gets unplugged and you would like to use it again
 7. Nano support
+8. Actual Circuit with an actual way to deal with the Ground and VCC
 
 #### Maybe/Nice to haves
 
