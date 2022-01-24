@@ -1,6 +1,13 @@
 # rokenbok-controller-port
-This is a repo for using an Arduino to control a Rokenbok. 
+This is a repo for using an Arduino to control a Rokenbok. This repo includes a way to controll by keyboard as well as multiple controllers. 
 
+# Installation
+Required
+```pip install pyserial```
+For controllers
+```pip install pygame```
+For keyboard control
+```pip install pywin32``
 
 ### TO DO:
 
