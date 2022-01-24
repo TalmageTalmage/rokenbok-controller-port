@@ -27,49 +27,66 @@ Bytes: 00000000 00000000
 
 Bytes: 10000000 00000000
 
+Hex: 0x80 0x0
+
 ### A
 ![A](Waveforms/A.png)
 
 Bytes: 00000000 01000000
 
+Hex: 0x0 0x40
+
 ### B
 
 ![B](Waveforms/B.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000000 00100000
+
+Hex: 0x0 0x20
 
 ### X
 
 ![X](Waveforms/X.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000000 00010000
+
+Hex: 0x0 0x10
 
 ### Y
 
 ![Y](Waveforms/Y.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000000 00000100
+
+Hex: 0x0 0x4
 
 ### UP
 
 ![UP](Waveforms/UP.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000100 00000000
+Hex: 0x4 0x0
 
 ### DOWN
 
 ![DOWN](Waveforms/DOWN.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000010 00000000
+
+Hex: 0x2 0x0
 
 ### LEFT
 
 ![LEFT](Waveforms/LEFT.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000000 10000000
+
+Hex: 0x0 0x80
 
 ### RIGHT
 
 ![RIGHT](Waveforms/RIGHT.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000001 00000000
+
+Hex: 0x1 0x0
