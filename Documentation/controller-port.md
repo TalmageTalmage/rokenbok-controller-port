@@ -13,44 +13,62 @@ The Command Deck will drive the Chip Select Line Low, signaling to the controlle
 
 Essentially, this means the controller is sending over two bytes. These 2 bytes are represented on the data line. A pulse for a clock is 1 and no pulse is a 0. For example, 10000000 00000000 will have a data pulse on the first clock and nothing on the rest of them.
 
-### Waveforms/Bytes
+## Waveforms/Bytes
 *note: the first Serial CLock pulse you see is actually two quick pulses in rapid sucession. The Select button goes inbetween these.*
 
+### NO INPUT
 ![NoInput](Waveforms/Nothing.png)
 
 Bytes: 00000000 00000000
+
+### SELECT
 
 ![SELECT](Waveforms/SELECT.png)
 
 Bytes: 10000000 00000000
 
+### A
 ![A](Waveforms/A.png)
 
-Bytes: 00000000 00000000
+Bytes: 00000000 01000000
+
+### B
 
 ![B](Waveforms/B.png)
 
 Bytes: 00000000 00000000
 
+### X
+
 ![X](Waveforms/X.png)
 
 Bytes: 00000000 00000000
+
+### Y
 
 ![Y](Waveforms/Y.png)
 
 Bytes: 00000000 00000000
 
+### UP
+
 ![UP](Waveforms/UP.png)
 
 Bytes: 00000000 00000000
+
+### DOWN
 
 ![DOWN](Waveforms/DOWN.png)
 
 Bytes: 00000000 00000000
 
+### LEFT
+
 ![LEFT](Waveforms/LEFT.png)
 
 Bytes: 00000000 00000000
+
+### RIGHT
 
 ![RIGHT](Waveforms/RIGHT.png)
 
