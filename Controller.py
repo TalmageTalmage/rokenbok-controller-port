@@ -9,7 +9,9 @@ import time
 ser =  serial.Serial("COM3", 115200) 
 ser1 = serial.Serial("COM7", 115200)
 
-import pygame
+import contextlib
+with contextlib.redirect_stdout(None):
+    import pygame
 
 BLACK = pygame.Color('black')
 WHITE = pygame.Color('white')
