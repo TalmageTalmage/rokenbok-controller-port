@@ -17,7 +17,7 @@ WHITE = pygame.Color('white')
 class TextPrint(object):
     def __init__(self):
         self.reset()
-        self.font = pygame.font.Font(None, 20)
+        self.font = pygame.font.Font(None, 40)
 
     def tprint(self, screen, textString):
         textBitmap = self.font.render(textString, True, BLACK)
@@ -25,9 +25,9 @@ class TextPrint(object):
         self.y += self.line_height
 
     def reset(self):
-        self.x = 10
-        self.y = 10
-        self.line_height = 15
+        self.x = 20
+        self.y = 20
+        self.line_height = 30
 
     def indent(self):
         self.x += 10
@@ -49,11 +49,10 @@ def convertToInt(arrayInput):
 pygame.init()
 
 screen = pygame.display.set_mode((500, 700))
-select1 = 0
+select = [0, 0]
 click1 = False
 ROKData1 = 0x00
 ROKData2 = 0x00
-select2 = 0
 ROKData3 = 0x00
 ROKData4 = 0x00
 ROKData5 = 0x00
@@ -80,18 +79,20 @@ while not done:
 
                 if event.button == 6:  # Select
                     if event.joy == 0 :
-                        select1= select1+ 1
-                        if select1 > 8:
-                            select1 = 1
-                        if select1 == select2:
-                            select1 = select1 + 1
+                        select[0]= select[0]+ 1
+                        if select[0] > 8:
+                            select[0] = 1
+                        if select[0] == select[1]:
+                            select[0] = select[0] + 1
                     elif event.joy == 1 :
-                        select2= select2+ 1
-                        if select2 > 8:
-                            select2 = 1
-                        if select1 == select2:
-                            select2 = select2 + 1
-                        
+                        select[1]= select[1]+ 1
+                        if select[1] > 8:
+                            select[1] = 1
+                        if select[0] == select[1]:
+                            select[1] = select[1] + 1
+                    
+    pygame.display.flip()
+
 
     # Get count of joysticks.
     joystick_count = pygame.joystick.get_count()
@@ -113,6 +114,7 @@ while not done:
 
     textPrint.tprint(screen, "Number of joysticks: {}".format(joystick_count))
     textPrint.indent()
+    
 
     # For each joystick:
     for i in range(joystick_count):
@@ -132,8 +134,10 @@ while not done:
             guid = joystick.get_guid()
         except AttributeError:
             pass
-
+        
         textPrint.tprint(screen, "Joystick {}".format(jid))
+        textPrint.tprint(screen, "Channel {}".format(select[jid]))
+
         if (convertToInt(ser.read(size=1)) == 0x12 and jid == 0): 
 
             axes = joystick.get_numaxes()
@@ -162,7 +166,6 @@ while not done:
                     ROKData2 = ROKData2 | 0b00010000
 
 
-            textPrint.tprint(screen, "Channel {}".format(select1))
                  
 
 
@@ -224,7 +227,6 @@ while not done:
                 #Select
                 if i == 6 and button == 1:
                     ROKData4 = ROKData4 | 0b00010000
-            textPrint.tprint(screen, "Channel {}".format(select2))
 
 
             hats = joystick.get_numhats()
@@ -259,7 +261,6 @@ while not done:
             ser1.write([ROKData3])
             ser1.write([ROKData4])
             # print("%s %s" % (hex(ROKData3),hex(ROKData4)))
-        pygame.display.flip()
 
 # ---------------TO HERE--------------------
 
