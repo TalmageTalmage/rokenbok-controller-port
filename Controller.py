@@ -11,6 +11,30 @@ ser1 = serial.Serial("COM7", 115200)
 
 import pygame
 
+BLACK = pygame.Color('black')
+WHITE = pygame.Color('white')
+
+class TextPrint(object):
+    def __init__(self):
+        self.reset()
+        self.font = pygame.font.Font(None, 20)
+
+    def tprint(self, screen, textString):
+        textBitmap = self.font.render(textString, True, BLACK)
+        screen.blit(textBitmap, (self.x, self.y))
+        self.y += self.line_height
+
+    def reset(self):
+        self.x = 10
+        self.y = 10
+        self.line_height = 15
+
+    def indent(self):
+        self.x += 10
+
+    def unindent(self):
+        self.x -= 10
+
 
 time.sleep(2)
 ser.write([0x10])
@@ -24,8 +48,12 @@ def convertToInt(arrayInput):
 
 pygame.init()
 
+screen = pygame.display.set_mode((500, 700))
+select1 = 0
+click1 = False
 ROKData1 = 0x00
 ROKData2 = 0x00
+select2 = 0
 ROKData3 = 0x00
 ROKData4 = 0x00
 ROKData5 = 0x00
@@ -40,18 +68,34 @@ done = False
 # Initialize the joysticks.
 pygame.joystick.init()
 
+textPrint = TextPrint()
 # -------- Main Program Loop -----------
 while not done:
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT: 
             done = True 
-        elif event.type == pygame.JOYBUTTONDOWN:
-            print("Joystick button pressed.")
-        elif event.type == pygame.JOYBUTTONUP:
             print("Joystick button released.")
+        elif event.type == pygame.JOYBUTTONDOWN:
+
+
+                if event.button == 6:  # Select
+                    if event.joy == 0 :
+                        select1= select1+ 1
+                        if select1 > 8:
+                            select1 = 1
+                        if select1 == select2:
+                            select1 = select1 + 1
+                    elif event.joy == 1 :
+                        select2= select2+ 1
+                        if select2 > 8:
+                            select2 = 1
+                        if select1 == select2:
+                            select2 = select2 + 1
+                        
 
     # Get count of joysticks.
     joystick_count = pygame.joystick.get_count()
+
     ROKData1 = 0x00
     ROKData2 = 0x00
     ROKData3 = 0x00
@@ -61,8 +105,18 @@ while not done:
     ROKData7 = 0x00
     ROKData8 = 0x00
 
+
+ 
+    textPrint.reset()
+    screen.fill(WHITE)
+
+
+    textPrint.tprint(screen, "Number of joysticks: {}".format(joystick_count))
+    textPrint.indent()
+
     # For each joystick:
     for i in range(joystick_count):
+
         user = joystick = pygame.joystick.Joystick(i)
         joystick = pygame.joystick.Joystick(i)
         joystick.init()
@@ -79,7 +133,7 @@ while not done:
         except AttributeError:
             pass
 
-
+        textPrint.tprint(screen, "Joystick {}".format(jid))
         if (convertToInt(ser.read(size=1)) == 0x12 and jid == 0): 
 
             axes = joystick.get_numaxes()
@@ -106,6 +160,10 @@ while not done:
                 #Select
                 if i == 6 and button == 1:
                     ROKData2 = ROKData2 | 0b00010000
+
+
+            textPrint.tprint(screen, "Channel {}".format(select1))
+                 
 
 
             hats = joystick.get_numhats()
@@ -166,6 +224,7 @@ while not done:
                 #Select
                 if i == 6 and button == 1:
                     ROKData4 = ROKData4 | 0b00010000
+            textPrint.tprint(screen, "Channel {}".format(select2))
 
 
             hats = joystick.get_numhats()
@@ -199,7 +258,8 @@ while not done:
                     ROKData4 = ROKData4 & 0b01111111
             ser1.write([ROKData3])
             ser1.write([ROKData4])
-            print("%s %s" % (hex(ROKData3),hex(ROKData4)))
+            # print("%s %s" % (hex(ROKData3),hex(ROKData4)))
+        pygame.display.flip()
 
 # ---------------TO HERE--------------------
 
