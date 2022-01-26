@@ -1,15 +1,23 @@
 # General Information 
-*note: The system of communication used is traditionally referred to as Master/Slave or Control/Target. The former is now deprecated and the latter is confusing as the Rokenbok controller is the target and the Command Deck is the controller. For this reason I will just refer to them by their original names, Command Deck and Controller.*
 
-
-The Rokenbok controller port is a female DB9 connector with only 5 pins in use, Ground, VCC, Serial Clock, Data Line, and a Chip Select line. 
+The Rokenbok controller port is a female DB9 connector with only 5 pins in use, Ground, VCC, Serial Clock, Data Line, and Sel%. 
 ![Pinout](Controller_Pinout.png)
 
-The Data Line works one way, controller to command deck. The Chip Select/Sel% functions well as a latch, but the Command Deck also be uses it to signal certain events to the controller, like when attempting to select a channel that another controller is already on.
+| Purpose|  DB9 Pin | Driven by |
+| --- | --- | ---|
+| VCC | 1 |Command Deck|
+| Sel% (Latch) | 2 | Command Deck |
+| Serial Clock | 3 |  Command Deck |
+| Data | 4 | Controller |
+| Ground | 5 | - |
+
+
+
+
+### Communication Protocol
 
 Each Clock Cycle has 16 clocks. Each clock represents a button. If that button is pressed then the Controller will drive the Data line HIGH until the beginning of the next clock.
 
-### Communication Protocol
 From the start of a Clock Cycle:
 
 1. Command Deck will drive the Sel% LOW, waits for a bit, then drive the Sel% HIGH again.
