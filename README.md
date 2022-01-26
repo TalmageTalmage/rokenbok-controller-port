@@ -21,6 +21,12 @@ Ground the VCC line from the Command Deck
 You can find details on the pins of the DB9 connector [here.](Documentation/DB9Pinout.txt)
 
 ### Software
+Upload the 'Hackenbok.ino' sketch to the Arduino(s). Neccesary adjustments listed in the top of 'Hackenbok.ino' 
+
+Run Controller.exe
+
+Alternatively, if you wish to run and edit the script.
+
 Required Library:
 
 ```pip install pyserial```
@@ -35,9 +41,7 @@ For keyboard control:
 
 1. After getting the libraries, upload the 'Hackenbock.ino' sketch to the Arduino(s). Adjust the sketch as needed depending on the model. 
 
-2. Adjust the Python code to match the COM port of the Arduino(s)
-
-3. Run Controller.py or Keyboard.py
+2. Run Controller.py or Keyboard.py
 
 4. Play Rokenbok!
 
@@ -54,17 +58,12 @@ For keyboard control:
 
 1. Add R and L trigger (This one's easy, I've just been lazy and these buttons are not frequently used)
 2. Compile into executable
-3. Selected Channel Tracker
-   - Should be possible through PyGame. Same library I'm currently using for controller support
-4. Handle Channel Skip when controller another controller is already on the channel
-   - Could just force child mode on - this would allow multiple controllers on the same channel
+3. ~~Selected Channel Tracker~~
+4. ~~Handle Channel Skip when controller another controller is already on the channel~~
 5. Support for up to 4 controllers (currently 2)
-6. Dynamic controller and Arduino support
-   - Have to comment out/add code to change number of Arduinos selected.
-   - Have to comment out/add code to change number of controllers.
-   - Have to reset if controller gets unplugged and you would like to use it again
+6. Dynamic controller ~~and Arduino support~~
 7. Nano support
-8. Actual Circuit with an actual way to deal with the Ground and VCC
+8. ~~Actual Circuit with an actual way to deal with the Ground and VCC~~
 
 #### Maybe/Nice to haves
 
