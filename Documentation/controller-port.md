@@ -29,6 +29,10 @@ Through this process, the controller will send 2 bytes to the Command Deck. The 
 
 For example, the Select button is represented by the first clock. If only the Select button is pressed then the controller will only drive the Data line HIGH for the first clock and LOW for the rest. The bytes sent will be 10000000 00000000.
 
+When multiple buttons are pressed the bytes for each button will "combine" with the 1's overwriting any 0's in the same location.
+
+For example, the A button use the bytes 00000000 01000000. The UP button uses 00000100 00000000. The bytes sent by the controller when both of these buttons are pressed will be 00000100 01000000. The controller will drive the Data line HIGH for the 6th and 10th clock.
+
 
 
 ## Waveforms/Bytes
