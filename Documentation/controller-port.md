@@ -1,17 +1,20 @@
 # General Information 
 
 The Rokenbok controller port is a female DB9 connector with only 5 pins in use, Ground, VCC, Serial Clock, Data Line, and Sel%. 
+
 ![Pinout](Controller_Pinout.png)
 
-| Purpose|  DB9 Pin | Driven by |
-| --- | --- | ---|
-| VCC | 1 |Command Deck|
-| Sel% (Latch) | 2 | Command Deck |
-| Serial Clock | 3 |  Command Deck |
-| Data | 4 | Controller |
-| Ground | 5 | - |
+| Purpose|  DB9 Pin | Driven by | Original Wire Color|
+| --- | --- | ---| ---|
+| VCC | 1 |Command Deck| Black |
+| Sel% (Latch) | 2 | Command Deck | Brown |
+| Serial Clock | 3 |  Command Deck | Green |
+| Data | 4 | Controller | Blue |
+| Ground | 5 | - | Yellow |
 
+The VCC supplies 5v power to the controller. The logic level of all the communication lines (Sel%, Data, Serial Clock) is 5v.
 
+The Rokenbok controller has 11 buttons; some older models may have a switch on the back as well. The controller uses two 8 bit parallel-in serial-out [shift registers](https://en.wikipedia.org/wiki/Shift_register) to capture the state of each button before sending the information along the Data line.
 
 
 ### Communication Protocol
@@ -21,15 +24,15 @@ Each Clock Cycle has 16 clocks. Each clock represents a button. If that button i
 From the start of a Clock Cycle:
 
 1. Command Deck will drive the Sel% LOW, waits for a bit, then drive the Sel% HIGH again.
-2. The Command Deck will again drive the Sel% LOW and the immmediately drives it HIGH again. This signals the start of the clocks to the controller
+2. The Command Deck will again drive the Sel% LOW and the immmediately drives it HIGH again. This signals the start of the Serial Clock to the controller
 3. The Command Deck will begin pulsing the Clock HIGH and LOW. 
 4. The Controller will drive the Data line HIGH or LOW for each Clock depending on the command it is issuing.
 
-Through this process, the controller will send 2 bytes to the Command Deck. The Data line being driven HIGH for a clock reperesents a 1 and the being driven LOW for a 0.
+Through this process, the controller will send 2 bytes to the Command Deck. The Data line being driven HIGH for a clock reperesents a 1 and driven LOW for a 0.
 
 For example, the Select button is represented by the first clock. If only the Select button is pressed then the controller will only drive the Data line HIGH for the first clock and LOW for the rest. The bytes sent will be 10000000 00000000.
 
-When multiple buttons are pressed the bytes for each button will "combine" with the 1's overwriting any 0's in the same location.
+Each of the shift register is responsible for one of the bytes. Pressing a button completes the circuit connecting to shift register. After the SEL% is driven low in step 3, the shift registers will check the button states and create a byte. 0 for each button that is not clicked and 1 for each button that is. 
 
 For example, the A button use the bytes 00000000 01000000. The UP button uses 00000100 00000000. The bytes sent by the controller when both of these buttons are pressed will be 00000100 01000000. The controller will drive the Data line HIGH for the 6th and 10th clock.
 
