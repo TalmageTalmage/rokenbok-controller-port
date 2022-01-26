@@ -56,7 +56,7 @@ For keyboard control: ```pip install pywin32```
 3. ~~Selected Channel Tracker~~
 4. ~~Handle Channel Skip when controller another controller is already on the channel~~
 5. Support for up to 4 controllers 
-   -Added but unable to test
+   - Added but unable to test
 6. Dynamic controller ~~and Arduino support~~
 7. Nano support
 8. ~~Actual Circuit with an actual way to deal with the Ground and VCC~~
