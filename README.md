@@ -1,5 +1,5 @@
 # rokenbok-controller-port
-This is a repo for using an Arduino to control a Rokenbok and general documentation on how the controller ports work. This repo includes a way to control by a singular keyboard or multiple controllers. 
+This is a repo for documenting how the Rokenbok's controller ports function as well as providing the functionality to interact with it using an Arduino.
 
 The goal of this Readme is only to explain how to set up the Arduino(s), run my scripts and layout a roadmap for future development. You can find my actual documentation on how the original controllers function and communicate with the Command Deck [here.](Documentation/controller-port.md)
 
