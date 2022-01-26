@@ -20,7 +20,7 @@ Ground the Ground line from the Command Deck into the Arduino
 
 Put the VCC into any port you like.
 
-You can find details on the pins of the DB9 connector [here.](Documentation/DB9Pinout.txt)
+You can find details on the pins of the DB9 connector [here.](Documentation/Connections.png)
 
 ### Software
 Upload the 'Hackenbok.ino' sketch to the Arduino(s). Neccesary adjustments listed in the top of 'Hackenbok.ino' 
