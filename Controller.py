@@ -4,9 +4,6 @@
 
 import serial
 import time
-#Adjust for however many arduinos you have hooked up. 1 Arduino = 1 controller port
-#There is more data marked below to comment out if you only have 1 arduino
-# ser = [ [serial.Serial("COM3", 115200), serial.Serial("COM7", 115200)] ]
 ser=[]
 import serial.tools.list_ports
 ports = list(serial.tools.list_ports.comports())
@@ -47,19 +44,16 @@ class TextPrint(object):
         self.x -= 10
 
 
-time.sleep(2)
-
-
-
-
 def convertToInt(arrayInput):
 	return int(ord(arrayInput[:1]))
+select = []
+
+
 
 
 pygame.init()
 
 screen = pygame.display.set_mode((500, 700))
-select = [0, 0]
 
 # Loop until the user clicks the close button.
 done = False
@@ -67,8 +61,24 @@ done = False
 
 # Initialize the joysticks.
 pygame.joystick.init()
+count = pygame.joystick.get_count()
+def selectUp(id):
+    select[id]= select[id]+1
+    if select[id] > 8:
+        select[id]=1
+    for j in range(count):
+        if select[j] == select[id] and j != id:
+                select[id] = select[id] + 1
+    if select[id] > 8:
+        select[id]=1
 
 textPrint = TextPrint()
+    
+for i in range(count):
+    select.append(0)
+
+
+
 # -------- Main Program Loop -----------
 while not done:
     for event in pygame.event.get(): 
@@ -78,19 +88,20 @@ while not done:
         elif event.type == pygame.JOYBUTTONUP:
 
 
-                if event.button == 6:  # Select
-                    if event.joy == 0 :
-                        select[0]= select[0]+ 1
-                        if select[0] > 8:
-                            select[0] = 1
-                        if select[0] == select[1]:
-                            select[0] = select[0] + 1
-                    elif event.joy == 1 :
-                        select[1]= select[1]+ 1
-                        if select[1] > 8:
-                            select[1] = 1
-                        if select[0] == select[1]:
-                            select[1] = select[1] + 1
+            if event.button == 6:  # Select
+                selectUp(event.instance_id)
+                    # if event.joy == 0 :
+                    #     select[0]= select[0]+ 1
+                    #     if select[0] > 8:
+                    #         select[0] = 1
+                    #     if select[0] == select[1]:
+                    #         select[0] = select[0] + 1
+                    # elif event.joy == 1 :
+                    #     select[1]= select[1]+ 1
+                    #     if select[1] > 8:
+                    #         select[1] = 1
+                    #     if select[0] == select[1]:
+                    #         select[1] = select[1] + 1
         elif event.type ==  pygame.JOYDEVICEREMOVED:
             select.insert(event.instance_id, 0)
             ser.insert(event.instance_id, 0)
