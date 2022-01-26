@@ -9,7 +9,7 @@ You can see a video of this project in action [here.](https://www.youtube.com/wa
 ### Hardware
 Pin Connections
 
-*note: The Pins for the DB9 Connector are listed left to right and top to bottom with the long side on top *
+*note: The Pins for the DB9 Connector are listed left to right and top to bottom with the long side on top*
 
 | Purpose|  DB9 Pin | Arduino Pin |
 | --- | --- | ---|
