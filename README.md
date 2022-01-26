@@ -39,7 +39,6 @@ For keyboard control: ```pip install pywin32```
 
 2. Run Controller.py or Keyboard.py
 
-4. Play Rokenbok!
 
 ### TO DO:
 
