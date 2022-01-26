@@ -7,18 +7,17 @@ You can see a video of this project in action [here.](https://www.youtube.com/wa
 
 # Installation/Setup
 ### Hardware
+Pin Connections
 
-The Arduino will use the following ports:
+*note: The Pins for the DB9 Connector are listed left to right and top to bottom with the long side on top *
 
-Serial Clock - Digital 2
-
-Latch - Digital 3
-
-Data - Digital 4
-
-Ground the Ground line from the Command Deck into the Arduino
-
-Put the VCC into any port you like.
+| Purpose|  DB9 Pin | Arduino Pin |
+| --- | --- | ---|
+| VCC | 1 | Any unused non-gnd pin|
+| Sel% (Latch) | 2 | Digital 3 |
+| Serial Clock | 3 | Digital 2|
+| Data | 4 | Digital 4|
+| Ground | 5 | GND|
 
 You can find details on the Arduino to Command Deck connections [here](Documentation/Connections.png) and the pinout for the DB9 connector [here.](Documentation/Controller-Pinout.txt)
 
