@@ -1,7 +1,7 @@
 # rokenbok-controller-port
 This is a repo for documenting how the Rokenbok's controller ports function as well as providing the functionality to interact with it using an Arduino.
 
-The goal of this Readme is only to explain how to set up the Arduino(s), run my scripts and layout a roadmap for future development. You can find my actual documentation on how the original controllers function and communicate with the Command Deck [here.](Documentation/controller-port.md)
+The purpose of this Readme is only to explain how to set up the Arduino(s), run my scripts and layout a roadmap for future development. You can find my actual documentation on how the original controllers function and communicate with the Command Deck [here.](Documentation/controller-port.md)
 
 You can see a video of this project in action [here.](https://www.youtube.com/watch?v=4-s3MExh7sA)
 
@@ -29,17 +29,11 @@ Run Controller.exe
 
 Alternatively, if you wish to run and edit the script.
 
-Required Library:
+Required Library: ```pip install pyserial```
 
-```pip install pyserial```
+For controllers support: ```pip install pygame```
 
-For controllers support:
-
-```pip install pygame```
-
-For keyboard control:
-
-```pip install pywin32```
+For keyboard control: ```pip install pywin32```
 
 1. After getting the libraries, upload the 'Hackenbock.ino' sketch to the Arduino(s). Adjust the sketch as needed depending on the model. 
 
@@ -62,10 +56,12 @@ For keyboard control:
 2. Compile into executable
 3. ~~Selected Channel Tracker~~
 4. ~~Handle Channel Skip when controller another controller is already on the channel~~
-5. Support for up to 4 controllers (currently 2)
+5. Support for up to 4 controllers 
+   -Added but unable to test
 6. Dynamic controller ~~and Arduino support~~
 7. Nano support
 8. ~~Actual Circuit with an actual way to deal with the Ground and VCC~~
+9. Build into React App and Express or Django server. Stream video of the Rokenbok and take commands from the website.
 
 #### Maybe/Nice to haves
 
@@ -94,7 +90,7 @@ The Arduino combines the bytes into 0010000001000001. Each clock pulse the Ardui
 
 0010000001000001 becomes 0100000010000010
 
-
+The bit shifted out is a 0. Data line stays low
 
 2nd Clock
 
