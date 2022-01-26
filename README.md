@@ -44,8 +44,7 @@ For keyboard control: ```pip install pywin32```
 ### TO DO:
 
 #### Efficiency:
-1. ~~Fix incredibly inefficient controller file ~~
-   - ~~refactor main loop. currently copy pasted for each controller instead of in a function~~
+1. ~~Fix incredibly inefficient controller file~~
 2. Make Arduino code shift bits. Actually emulate the bytes sent on the original controller
    - Currently just telling it to spike on the right clock if a button is presesed. 
    - This is much less efficient then just reading each bit in a byte. I'll explain below.
