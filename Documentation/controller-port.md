@@ -5,7 +5,7 @@
 The Rokenbok controller port is a female DB9 connector with only 5 pins in use, Ground, VCC, Serial Clock, Data Line, and a Chip Select line. 
 ![Pinout](Controller_Pinout.png)
 
-This repo is using the Chip Select Line as a latch. The Data Line works one way, joystick to command deck. I believe the Command Deck can send information to the joystick using the Chip Select Line.
+This repo is using the Chip Select Line as a latch. The Data Line works one way, controller to command deck. I believe the Command Deck can send information to the controller using the Chip Select Line.
 
 ### Communication Protocol
 
