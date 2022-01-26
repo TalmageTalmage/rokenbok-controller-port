@@ -3,7 +3,7 @@ This is a repo for documenting how the Rokenbok's controller ports function as w
 
 The goal of this Readme is only to explain how to set up the Arduino(s), run my scripts and layout a roadmap for future development. You can find my actual documentation on how the original controllers function and communicate with the Command Deck [here.](Documentation/controller-port.md)
 
-
+You can see a video of this project in action [here.](https://www.youtube.com/watch?v=4-s3MExh7sA)
 
 # Installation/Setup
 ### Hardware
@@ -24,7 +24,7 @@ You can find details on the Arduino to Command Deck connections [here](Documenta
 
 
 ### Software
-Upload the 'Hackenbok.ino' sketch to the Arduino(s). Neccesary adjustments listed in the top of 'Hackenbok.ino' 
+Upload the 'Hackenbok.ino' sketch to the Arduino(s). It should be all set up for an Arduino UNO. The correct code to use for an Arduino MEGA in the comments at the top of the file.
 
 Run Controller.exe
 
@@ -51,8 +51,8 @@ For keyboard control:
 ### TO DO:
 
 #### Efficiency:
-1. Fix incredibly inefficient controller file 
-   - refactor main loop. currently copy pasted for each controller instead of in a function
+1. ~~Fix incredibly inefficient controller file ~~
+   - ~~refactor main loop. currently copy pasted for each controller instead of in a function~~
 2. Make Arduino code shift bits. Actually emulate the bytes sent on the original controller
    - Currently just telling it to spike on the right clock if a button is presesed. 
    - This is much less efficient then just reading each bit in a byte. I'll explain below.
@@ -89,24 +89,24 @@ Example:
 
 The Arduino receives 00100000 01000001
 
-The Arduino combines the bytes into 0010000001000001. Each clock pulse the Arduino will shift the bits to the left and check the bit shifted out.
+The Arduino combines the bytes into 0010000001000001. Each clock pulse the Arduino will shift the bits to the left and then checks the bit shifted out. It it's a 1 the Data line will Drive High until the next clock. If it is a 0 the Data line will stay Low.
 
 1st Clock
 
 0010000001000001 becomes 0100000010000010
 
-If statement runs to check if the bit shifted out is a 1 or 0. If 1 the Data line pulses
+
 
 2nd Clock
 
 010000001000001 becomes 1000000100000100
 
-If statement runs to check if the bit shifted out is a 1 or 0. The bit shifted out is a 0. The data line stays low
+The bit shifted out is a 0. Data line stays low
 
 3rd Clock
 
 1000000100000100 becomes 0000001000001000
 
-If statement runs to check if the bit shifted out is a 1 or 0. The bit shifted out is a 1 and the data line drives high until the next clock pulse
+The bit shifted out is a 1. Data line will drive High until the next clock.
 
 .....
