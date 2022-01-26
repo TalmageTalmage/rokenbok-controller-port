@@ -84,7 +84,6 @@ while not done:
     for event in pygame.event.get(): 
         if event.type == pygame.QUIT: 
             done = True 
-            print("Joystick button released.")
         elif event.type == pygame.JOYBUTTONUP:
 
 
