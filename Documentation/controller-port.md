@@ -1,17 +1,27 @@
 # General Information 
-*note: The system of communication used is traditionally referred to as Master/Slave or Control/Target. The former is now deprecated and the latter is confusing, as the controller is the target and the Command Deck is the controller. For this reason I will just refer to them by their original names, Command Deck and Controller.*
+*note: The system of communication used is traditionally referred to as Master/Slave or Control/Target. The former is now deprecated and the latter is confusing as the Rokenbok controller is the target and the Command Deck is the controller. For this reason I will just refer to them by their original names, Command Deck and Controller.*
 
 
 The Rokenbok controller port is a female DB9 connector with only 5 pins in use, Ground, VCC, Serial Clock, Data Line, and a Chip Select line. 
 ![Pinout](Controller_Pinout.png)
 
-This repo is using the Chip Select Line as a latch. The Data Line works one way, controller to command deck. I believe the Command Deck can send information to the controller using the Chip Select Line.
+The Data Line works one way, controller to command deck. The Chip Select/Sel% functions well as a latch, but the Command Deck also be uses it to signal certain events to the controller, like when attempting to select a channel that another controller is already on.
+
+Each Clock Cycle has 16 clocks. Each clock represents a button. If that button is pressed then the Controller will drive the Data line HIGH until the beginning of the next clock.
 
 ### Communication Protocol
+From the start of a Clock Cycle:
 
-The Command Deck will drive the Chip Select Line Low, signaling to the controller that it is ready to receive a command. The Deck will drive the serial clock High and then immediately back low. The deck will do this pulse 17 times. Each button is represented by one of the pulses. If that button is pressed the controller will drive the data line high until the next serial clock pulse. 
+1. Command Deck will drive the Sel% LOW, waits for a bit, then drive the Sel% HIGH again.
+2. The Command Deck will again drive the Sel% LOW and the immmediately drives it HIGH again. This signals the start of the clocks to the controller
+3. The Command Deck will begin pulsing the Clock HIGH and LOW. 
+4. The Controller will drive the Data line HIGH or LOW for each Clock depending on the command it is issuing.
 
-Essentially, this means the controller is sending over two bytes. These 2 bytes are represented on the data line. A pulse for a clock is 1 and no pulse is a 0. For example, 10000000 00000000 will have a data pulse on the first clock and nothing on the rest of them.
+Through this process, the controller will send 2 bytes to the Command Deck. The Data line being driven HIGH for a clock reperesents a 1 and the being driven LOW for a 0.
+
+For example, the Select button is represented by the first clock. If only the Select button is pressed then the controller will only drive the Data line HIGH for the first clock and LOW for the rest. The bytes sent will be 10000000 00000000.
+
+
 
 ## Waveforms/Bytes
 *note: The first Serial Clock pulse you see is actually two quick pulses in rapid sucession. The Select button goes inbetween these.*
