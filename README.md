@@ -16,7 +16,9 @@ Latch - Digital 3
 
 Data - Digital 4
 
-Ground the VCC line from the Command Deck 
+Ground the Ground line from the Command Deck into the Arduino
+
+Put the VCC into any port you like.
 
 You can find details on the pins of the DB9 connector [here.](Documentation/DB9Pinout.txt)
 
