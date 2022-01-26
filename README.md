@@ -1,7 +1,3 @@
-@settings {
-  font-size: 100;
-}
-
 # rokenbok-controller-port
 This is a repo for documenting how the Rokenbok's controller ports function as well as providing the functionality to interact with it using an Arduino.
 
