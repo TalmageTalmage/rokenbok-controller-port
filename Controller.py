@@ -6,7 +6,17 @@ import serial
 import time
 #Adjust for however many arduinos you have hooked up. 1 Arduino = 1 controller port
 #There is more data marked below to comment out if you only have 1 arduino
-ser =  [serial.Serial("COM3", 115200), serial.Serial("COM7", 115200)] 
+# ser = [ [serial.Serial("COM3", 115200), serial.Serial("COM7", 115200)] ]
+ser=[]
+import serial.tools.list_ports
+ports = list(serial.tools.list_ports.comports())
+for p in ports:
+    h=0
+    if "Arduino" in p.description:
+        
+        ser.append(serial.Serial(p[0], 115200))
+        ser[h].write([0x10])
+        h = h+1
 
 import contextlib
 with contextlib.redirect_stdout(None):
@@ -38,8 +48,7 @@ class TextPrint(object):
 
 
 time.sleep(2)
-ser[0].write([0x10])
-ser[1].write([0x10])
+
 
 
 
@@ -82,6 +91,13 @@ while not done:
                             select[1] = 1
                         if select[0] == select[1]:
                             select[1] = select[1] + 1
+        elif event.type ==  pygame.JOYDEVICEREMOVED:
+            select.insert(event.instance_id, 0)
+            ser.insert(event.instance_id, 0)
+
+
+
+
                     
     pygame.display.flip()
 
@@ -114,7 +130,6 @@ while not done:
             jid = joystick.get_instance_id()
         except AttributeError:
             jid = joystick.get_id()
-
         name = joystick.get_name()
 
         try:
@@ -122,74 +137,74 @@ while not done:
         except AttributeError:
             pass
         
-        textPrint.tprint(screen, "Joystick {}".format(jid))
-        textPrint.tprint(screen, "Channel {}".format(select[jid]))
+        try:
+            textPrint.tprint(screen, "Joystick {}".format(jid))
+            textPrint.tprint(screen, "Channel {}".format(select[jid]))
+        except:
+            pass
 
-        if (convertToInt(ser[0].read(size=1)) == 0x12 and jid == 0) or (convertToInt(ser[1].read(size=1)) == 0x12 and jid == 1): 
+        try:
+            if (convertToInt(ser[jid].read(size=1)) == 0x12): 
 
-            axes = joystick.get_numaxes()
+                axes = joystick.get_numaxes()
 
-            for i in range(axes):
-                axis = joystick.get_axis(i)
+                for i in range(axes):
+                    axis = joystick.get_axis(i)
 
-            buttons = joystick.get_numbuttons()
+                buttons = joystick.get_numbuttons()
 
-            for i in range(buttons):
-                button = joystick.get_button(i)
-                #A
-                if  i == 0 and button == 1:
-                    ROKData[0] = ROKData[0] | 0b00010000
-                #B   
-                if i == 1 and button == 1:
-                    ROKData[0] = ROKData[0] | 0b00000001
-                #X
-                if i == 2 and button == 1:
-                    ROKData[0] = ROKData[0] | 0b00000010
-                #Y
-                if i == 3 and button == 1:
-                    ROKData[0] = ROKData[0] | 0b00001000
-                #Select
-                if i == 6 and button == 1:
-                    ROKData[1] = ROKData[1] | 0b00010000
+                for i in range(buttons):
+                    button = joystick.get_button(i)
+                    #A
+                    if  i == 0 and button == 1:
+                        ROKData[0] = ROKData[0] | 0b00010000
+                    #B   
+                    if i == 1 and button == 1:
+                        ROKData[0] = ROKData[0] | 0b00000001
+                    #X
+                    if i == 2 and button == 1:
+                        ROKData[0] = ROKData[0] | 0b00000010
+                    #Y
+                    if i == 3 and button == 1:
+                        ROKData[0] = ROKData[0] | 0b00001000
+                    #Select
+                    if i == 6 and button == 1:
+                        ROKData[1] = ROKData[1] | 0b00010000
 
+                hats = joystick.get_numhats()
 
-                 
+                for i in range(hats):
+                    hat = joystick.get_hat(i)
 
+                    #up
+                    if hat[1] == 1:
+                        ROKData[1] = ROKData[1] | 0b01000000
+                    else:
+                        ROKData[1] = ROKData[1] & 0b10111111
+                    #down
+                    if hat[1] == (-1):
+                        ROKData[1] = ROKData[1] | 0b00100000
+                    else:
+                        ROKData[1] = ROKData[1] & 0b11011111
+                    #left
+                    if hat[0] == (-1):
+                        ROKData[1] = ROKData[1] | 0b00000010
+                    else:
+                        ROKData[1] = ROKData[1] & 0b11111101
+                    #right
+                    if hat[0] == (1):
+                        ROKData[1] = ROKData[1] | 0b10000000
+                    else:
+                        ROKData[1] = ROKData[1] & 0b01111111
+                    try:
+                        ser[jid].write([ROKData[0]])
+                        ser[jid].write([ROKData[1]])
+                    except:
+                        
+                        pass
+        except:
+            pass
 
-            hats = joystick.get_numhats()
-
-
-            for i in range(hats):
-                hat = joystick.get_hat(i)
-
-                #up
-                if hat[1] == 1:
-                    ROKData[1] = ROKData[1] | 0b01000000
-                else:
-                    ROKData[1] = ROKData[1] & 0b10111111
-                #down
-                if hat[1] == (-1):
-                    ROKData[1] = ROKData[1] | 0b00100000
-                else:
-                    ROKData[1] = ROKData[1] & 0b11011111
-                #left
-                if hat[0] == (-1):
-                    ROKData[1] = ROKData[1] | 0b00000010
-                else:
-                    ROKData[1] = ROKData[1] & 0b11111101
-                #right
-                if hat[0] == (1):
-                    ROKData[1] = ROKData[1] | 0b10000000
-                else:
-                    ROKData[1] = ROKData[1] & 0b01111111
-            if jid== 0:
-                ser[0].write([ROKData[0]])
-                ser[0].write([ROKData[1]])
-
-            elif jid ==1:
-                ser[1].write([ROKData[0]])
-                ser[1].write([ROKData[1]])
-                print("%s %s" % (hex(ROKData[0]),hex(ROKData[1])))
 
 
 
