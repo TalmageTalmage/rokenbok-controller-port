@@ -125,7 +125,7 @@ while not done:
     screen.fill(WHITE)
 
 
-    textPrint.tprint(screen, "Number of joysticks: {}".format(joystick_count))
+    textPrint.tprint(screen, "Number of controllers: {}".format(joystick_count))
     textPrint.indent()
     
 
